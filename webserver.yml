@@ -1,0 +1,10 @@
+- hosts: authservice
+  become:  
+    true
+  become_method: 
+    sudo
+  roles:
+   - java
+   - nginx
+   - users
+   - auth-service

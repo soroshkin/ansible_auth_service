@@ -1,0 +1,31 @@
+- name: create path
+  file:
+    path: /usr/builds/auth-service/jpa/target
+    state: directory
+- name: copy application file
+  copy: 
+    src: /usr/builds/auth-service/jpa/target/jpa.jar 
+    dest: /usr/builds/auth-service/jpa/target/jpa.jar
+    mode: 0755
+    force: yes
+- name: copy system unit conf
+  copy: 
+    src: /etc/systemd/system/auth-jpa.service
+    dest: /etc/systemd/system/auth-jpa.service
+    force: yes
+    mode: 0755
+- name: copy system unit env
+  copy: 
+    src: /etc/systemd/system/auth-jpa-env
+    dest: /etc/systemd/system/auth-jpa-env
+    force: yes
+    mode: 0755
+- name: reload daemons
+  systemd:
+    daemon_reload: yes
+- name: create application as service
+  service: 
+    name: auth-jpa.service
+    enabled: yes
+    state: started
+ 

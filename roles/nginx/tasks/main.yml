@@ -1,0 +1,25 @@
+- name: Install Nginx
+  yum:
+    name: nginx
+    state: present
+    update_cache: yes
+- name: configure nginx
+  template: src=templates/nginx.conf dest=/etc/nginx/conf.d mode=0644
+- name: replace nginx.conf
+  copy:
+    src: /etc/nginx/nginx.conf
+    dest:  /etc/nginx/nginx.conf
+    force: yes
+    mode: 0644
+- name: start nginx
+  service: 
+    name: nginx
+    enabled: yes
+    state: started
+- name: update config
+  command: nginx -s reload 
+- name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes

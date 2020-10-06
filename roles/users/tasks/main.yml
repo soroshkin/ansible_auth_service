@@ -1,0 +1,7 @@
+- name: create user authUser
+  user:
+    name: authUser
+    state: present
+    append: yes
+    shell: /bin/false
+  become: true
