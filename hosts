@@ -41,7 +41,11 @@
 # leading 0s:
 
 ## db-[99:101]-node.example.com
-[authservice]
+[authservice_child_nodes]
 188.68.221.65   ansible_connection=ssh        ansible_user=root
 77.223.98.45    ansible_connection=ssh        ansible_user=root
+
+[authservice_loadbalancer]
+80.249.150.199   ansible_connection=ssh        ansible_user=root
+
 

@@ -1,0 +1,12 @@
+[Unit]
+Description=Launch auth service
+After=syslog.target
+
+[Service]
+User={{ new_service_user }}
+EnvironmentFile={{ system_unit_dest_path }}/{{ system_unit_env_var_file_name }}
+ExecStart={{ application_path }}/{{ application_file_name }}
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

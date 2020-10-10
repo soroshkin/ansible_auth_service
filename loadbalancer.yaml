@@ -1,0 +1,7 @@
+- hosts: authservice_loadbalancer
+  become:  
+    true
+  become_method: 
+    sudo
+  roles:
+   - nginx

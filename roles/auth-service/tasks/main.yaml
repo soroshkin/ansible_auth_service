@@ -1,0 +1,56 @@
+- name: create path
+  file:
+    path: "{{ application_path }}"
+    state: directory
+
+- name: copy system unit config
+  template: 
+    src: "{{ role_path }}/templates/{{ system_unit_file_name }}"
+    dest: "{{ system_unit_dest_path }}/{{ system_unit_file_name }}"
+    force: yes
+    mode: 0755
+
+- name: copy system unit environment vars
+  copy: 
+    src: "{{ role_path }}/templates/{{ system_unit_env_var_file_name }}"
+    dest: "{{ system_unit_dest_path }}/{{ system_unit_env_var_file_name }}"
+    force: yes
+    mode: 0755
+
+- name: get gitlab job name
+  uri:
+    url: "https://gitlab.com/api/v4/projects/{{ gitlab_project }}/jobs"
+    headers:
+      PRIVATE-TOKEN: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62343936633338376262613562393763323838326161666232363736316533653033613234643830
+          6637303232613736356563356234333536393062643731360a383336353665643230353432353034
+          61653632336363333663656261623765336535613338663730613836376237616235303030326331
+          3439646632653964330a353166663961366562663937613436383034383735343165366437383261
+          32363362613365353630643065366465366239316633643938663035366630663637
+  register: gitlab_build
+
+- name: gitlab download artifact
+  get_url:
+    url: "https://gitlab.com/api/v4/projects/{{ gitlab_project }}/jobs/{{ gitlab_build.json[0].id }}/{{ file_path_in_artifact }}/{{ application_file_name }}"
+    headers:
+      PRIVATE-TOKEN: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62343936633338376262613562393763323838326161666232363736316533653033613234643830
+          6637303232613736356563356234333536393062643731360a383336353665643230353432353034
+          61653632336363333663656261623765336535613338663730613836376237616235303030326331
+          3439646632653964330a353166663961366562663937613436383034383735343165366437383261
+          32363362613365353630643065366465366239316633643938663035366630663637
+    dest: "{{ application_path }}/{{ application_file_name }}"
+
+- name: set attributes to file
+  file:
+    path: "{{ application_path }}/{{ application_file_name }}"
+    mode: 0755
+
+- name: create application as service
+  service: 
+    name: auth-jpa.service
+    enabled: yes
+    state: started
+ 

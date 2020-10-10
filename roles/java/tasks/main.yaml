@@ -1,0 +1,32 @@
+- name: install java
+  yum:
+    name: "java{{ java_version }}"
+    state: present
+
+- name: create java folder for symlink
+  file: 
+    path: "{{ java_folder_for_symlink }}"
+    state: directory
+    mode: 0755
+
+- name: create symlink
+  file: 
+    src: "{{ java_folder }}"
+    dest: "{{ java_folder_for_symlink }}/{{ java_symlink }}"
+    state: link
+
+- name: set java_home
+  lineinfile: 
+    dest: "{{ env_vars_dest }}"
+    regexp: '^JAVA_HOME'
+    line: "{{ export_java_home_command }}"
+  become_user: "{{ new_service_user }}"
+  notify: reload env vars
+
+- name: set path
+  lineinfile: 
+    dest: "{{ env_vars_dest }}"
+    regexp: '^PATH='
+    line: "{{ export_path_command }}"
+  become_user: "{{ new_service_user }}"
+  notify: reload env vars

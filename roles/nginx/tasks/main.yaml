@@ -1,0 +1,74 @@
+- name: install Nginx repo
+  yum_repository: 
+    name: nginx
+    description: nginx stable repo
+    baseurl: http://nginx.org/packages/centos/$releasever/$basearch/
+    gpgcheck: yes
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    state: present
+    enabled: yes
+
+- name: install Nginx
+  yum:
+    name: "nginx{{ nginx_version }}"
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+
+- name: configure nodes
+  template: 
+    src: "{{ role_path }}/templates/{{ child_node_template_file }}"
+    dest: "{{ nginx_conf_target_file }}"
+    mode: 0644
+    force: yes
+  when: "'authservice_child_nodes' in groups"
+  notify: update config
+
+- name: configure loadbalancer
+  template: 
+    src: "{{ role_path }}/templates/{{ loadbalancer_template_file }}"
+    dest: "{{ nginx_conf_target_file }}"
+    mode: 0644
+    force: yes
+  when: "'authservice_loadbalancer' in group_names"
+  notify: update config
+
+- name: create folder for ssl cert
+  file: 
+    path: "{{ ssl_certificate_path }}"
+    state: directory
+    mode: 0644
+  when: "'authservice_loadbalancer' in group_names"
+
+- name: copy ssl cert
+  copy: 
+    src: "{{ role_path }}/files/{{ ssl_certificate_name }}"
+    dest: "{{ ssl_certificate_path }}/{{ ssl_certificate_name }}"
+    mode: 0644
+  when: "'authservice_loadbalancer' in group_names"
+
+- name: create folder for ssl key
+  file: 
+    path: "{{ ssl_certificate_key_path }}"
+    state: directory
+    mode: 0700
+  when: "'authservice_loadbalancer' in group_names"
+
+- name: copy ssl key
+  copy: 
+    src: "{{ role_path }}/files/{{ ssl_certificate_key_name }}"
+    dest: "{{ ssl_certificate_key_path }}/{{ ssl_certificate_key_name }}"
+    mode: 0700
+  when: "'authservice_loadbalancer' in group_names"
+
+- name: start nginx
+  service: 
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: set httpd_can_network_connect flag on and keep it persistent across reboots
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes

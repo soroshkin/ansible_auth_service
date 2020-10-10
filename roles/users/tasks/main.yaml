@@ -1,6 +1,6 @@
-- name: create user authUser
+- name: create user for service
   user:
-    name: authUser
+    name: "{{ new_service_user }}"
     state: present
     append: yes
     shell: /bin/false
