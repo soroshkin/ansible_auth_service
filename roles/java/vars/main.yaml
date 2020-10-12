@@ -1,10 +1,3 @@
 java_version: -1.8.0-openjdk-devel
 
-java_folder_for_symlink: /usr/java/java_1.8
-java_symlink: java
-env_vars_dest: ~/.bash_profile
-
-java_folder: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64/bin
-
-export_path_command: export PATH=$PATH:{{ java_folder }}
-export_java_home_command: export JAVA_HOME={{ java_folder }}
+java_folder: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64

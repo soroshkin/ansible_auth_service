@@ -1,6 +1,8 @@
 application_path: /usr/applications/auth-service
 application_file_name: jpa.jar
 
+service_name: auth-jpa.service
+
 system_unit_file_name: auth-jpa.service
 system_unit_dest_path: /etc/systemd/system
 system_unit_env_var_file_name: auth-jpa-env

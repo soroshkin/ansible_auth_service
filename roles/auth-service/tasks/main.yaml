@@ -9,13 +9,15 @@
     dest: "{{ system_unit_dest_path }}/{{ system_unit_file_name }}"
     force: yes
     mode: 0755
+  notify: reload daemons
 
 - name: copy system unit environment vars
-  copy: 
+  template: 
     src: "{{ role_path }}/templates/{{ system_unit_env_var_file_name }}"
     dest: "{{ system_unit_dest_path }}/{{ system_unit_env_var_file_name }}"
     force: yes
     mode: 0755
+  notify: reload daemons
 
 - name: get gitlab job name
   uri:
@@ -42,6 +44,7 @@
           3439646632653964330a353166663961366562663937613436383034383735343165366437383261
           32363362613365353630643065366465366239316633643938663035366630663637
     dest: "{{ application_path }}/{{ application_file_name }}"
+  notify: restart service
 
 - name: set attributes to file
   file:
@@ -50,7 +53,7 @@
 
 - name: create application as service
   service: 
-    name: auth-jpa.service
+    name: "{{ service_name }}"
     enabled: yes
     state: started
  

@@ -14,19 +14,3 @@
     src: "{{ java_folder }}"
     dest: "{{ java_folder_for_symlink }}/{{ java_symlink }}"
     state: link
-
-- name: set java_home
-  lineinfile: 
-    dest: "{{ env_vars_dest }}"
-    regexp: '^JAVA_HOME'
-    line: "{{ export_java_home_command }}"
-  become_user: "{{ new_service_user }}"
-  notify: reload env vars
-
-- name: set path
-  lineinfile: 
-    dest: "{{ env_vars_dest }}"
-    regexp: '^PATH='
-    line: "{{ export_path_command }}"
-  become_user: "{{ new_service_user }}"
-  notify: reload env vars

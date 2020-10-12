@@ -1,3 +1,5 @@
+new_service_user: authUser
+
 nginx_version: -1.16.1
 
 nginx_user: nginx
