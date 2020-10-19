@@ -1,12 +1,10 @@
-- hosts: authservice_child_nodes
+- hosts: database
   become:  
     true
   become_method: 
     sudo
   roles:
-   - users
-   - java
-   - auth-service
-   - nginx
+   - postgres
   vars_files:
+   - vars/secret.yaml
    - vars/external_vars.yaml

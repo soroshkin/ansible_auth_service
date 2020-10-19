@@ -1,3 +1,6 @@
-JAVA_OPTS="-Xms16m -Xmx128m -Xdiag -Dserver.servlet.context-path=/jpa"
-JAVA_HOME={{ java_folder_for_symlink }}/{{ java_symlink }}
-PATH=$PATH:{{ java_folder_for_symlink }}/{{ java_symlink }}/bin
+JAVA_OPTS="-Xms16m -Xmx128m -Xdiag -Dserver.servlet.context-path=/jpa \
+-Dspring.datasource.url={{ datasource_url }} \
+-Dspring.datasource.username={{ postgresql_user }} \
+-Dspring.datasource.password={{  postgres_password }}"
+
+JAVA_HOME={{ java_folder }}

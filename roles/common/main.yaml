@@ -1,0 +1,4 @@
+- name: update yum
+  yum: 
+    name: vim
+    state: present

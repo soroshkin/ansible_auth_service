@@ -1,0 +1,11 @@
+- hosts: authservice_api
+  become:  
+    true
+  become_method: 
+    sudo
+  roles:
+   - auth-service
+   - nginx
+  vars_files:
+   - vars/secret.yaml
+   - vars/external_vars.yaml

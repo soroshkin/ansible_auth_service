@@ -15,25 +15,25 @@
     update_cache: yes
     allow_downgrade: yes
 
-- name: configure nodes
+- name: configure nginx on application nodes
   template: 
     src: "{{ role_path }}/templates/{{ child_node_template_file }}"
     dest: "{{ nginx_conf_target_file }}"
     mode: 0644
     force: yes
-  when: "'authservice_child_nodes' in groups"
-  notify: update config
+  when: "'authservice_api' in groups"
+  notify: update config file
 
-- name: configure loadbalancer
+- name: configure nginx on loadbalancer node
   template: 
     src: "{{ role_path }}/templates/{{ loadbalancer_template_file }}"
     dest: "{{ nginx_conf_target_file }}"
     mode: 0644
     force: yes
   when: "'authservice_loadbalancer' in group_names"
-  notify: update config
+  notify: update config file
 
-- name: create folder for ssl cert
+- name: create folder for ssl certificate
   file: 
     path: "{{ ssl_certificate_path }}"
     state: directory
@@ -61,7 +61,7 @@
     mode: 0700
   when: "'authservice_loadbalancer' in group_names"
 
-- name: start nginx
+- name: start nginx 
   service: 
     name: nginx
     enabled: yes

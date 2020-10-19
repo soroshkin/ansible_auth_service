@@ -2,7 +2,7 @@
   systemd:
     daemon_reload: yes
 
-- name: restart service
+- name: "restart {{ service_name }}"
   systemd: 
     name: "{{ service_name }}"
     state: restarted

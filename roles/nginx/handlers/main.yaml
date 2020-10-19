@@ -1,2 +1,2 @@
-- name: update config
+- name: update config file
   command: nginx -s reload

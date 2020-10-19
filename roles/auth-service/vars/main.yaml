@@ -1,3 +1,6 @@
+java_version: -1.8.0-openjdk-devel
+java_folder: /usr/lib/jvm/java-1.8.0-openjdk
+
 application_path: /usr/applications/auth-service
 application_file_name: jpa.jar
 
@@ -13,3 +16,5 @@ temp_dir_name: /usr/temp
 artifact_url: https://gitlab.com/api/v4/projects/{{ gitlab_project }}/jobs/artifacts/{{ gitlab_build.json[0].ref }}/download?job={{ gitlab_build.json[0].name }}
 file_from_artifact_url: https://gitlab.com/api/v4/projects/{{ gitlab_project }}/jobs/{{ gitlab_build.json[0].name }}/artifacts/{{ gitlab_build.json[0].ref }}/jpa/target/jpa.jar
 file_path_in_artifact: artifacts/jpa/target
+
+datasource_url: jdbc:postgresql://{{ hostvars['postgres'].ansible_host }}:5432/{{ postgresql_db }}?ssl=false

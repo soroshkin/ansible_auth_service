@@ -1,8 +1,6 @@
-new_service_user: authUser
-
 nginx_version: -1.16.1
 
-nginx_user: nginx
+nginx_user: "{{ new_service_user }}"
 worker_processes: auto
 worker_connections: 1024
 client_max_body_size: 4M

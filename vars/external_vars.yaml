@@ -1,3 +1,5 @@
-java_folder_for_symlink: /usr/java/java_1.8
-java_symlink: java
+new_service_user: auth_user
 
+postgres_default_user: postgres
+postgresql_user: "{{ new_service_user }}"
+postgresql_db: auth_db

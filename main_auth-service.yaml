@@ -1,2 +1,15 @@
+- hosts: authservice_api, authservice_loadbalancer
+  become:  
+    true
+  become_method: 
+    sudo
+  roles:
+   - users
+   - common
+  vars_files:
+   - vars/external_vars.yaml
+
+- import_playbook: postgres.yaml
 - import_playbook: loadbalancer.yaml
-- import_playbook: nodes.yaml
+- import_playbook: api.yaml
+

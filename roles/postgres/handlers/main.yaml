@@ -1,0 +1,9 @@
+- name: restart postgresql
+  systemd:
+    name: "{{ postgresql_service }}" 
+    state: restarted
+
+- name: reload firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

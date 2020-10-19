@@ -1,9 +1,10 @@
-- hosts: authservice_loadbalancer
+- hosts: database
   become:  
     true
   become_method: 
     sudo
   roles:
-   - nginx
+   - test
   vars_files:
    - vars/external_vars.yaml
+   - vars/secret.yaml

@@ -1,0 +1,12 @@
+postgresql_version: postgresql12-server
+postgresql_repo_url: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+postgresql_bin_dir: /usr/pgsql-12/bin
+postgresql_data_dir: /var/lib/pgsql/12/data
+postgresql_setup_file: postgresql-12-setup
+postgresql_service: postgresql-12
+
+hba_file_name: pg_hba.conf
+conf_file_name: postgresql.conf
+
+postgres_port: 5432/tcp
