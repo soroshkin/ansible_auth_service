@@ -1,10 +1,11 @@
-- hosts: database
+- hosts: localhost
   become:  
     true
-  become_method: 
-    sudo
-  roles:
-   - test
+  tasks:
+    - name: update yum
+      yum:
+        name: yum
+        state: latest
   vars_files:
    - vars/external_vars.yaml
    - vars/secret.yaml

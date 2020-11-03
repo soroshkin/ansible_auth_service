@@ -1,4 +1,9 @@
-- name: update yum
+- name: install vim
   yum: 
     name: vim
     state: present
+
+- name: update yum
+  yum:
+    name: yum
+    state: latest
