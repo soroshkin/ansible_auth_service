@@ -1,11 +1,11 @@
 [authservice_api]
-82.148.29.76    ansible_connection=ssh       ansible_user=root
+79.143.29.227   ansible_connection=ssh       ansible_user=root
 
 [authservice_loadbalancer]
-81.163.28.150   ansible_connection=ssh       ansible_user=root
+77.223.96.132  ansible_connection=ssh       ansible_user=root
 
 [database]
-postgres   ansible_host=77.223.97.42    ansible_connection=ssh       ansible_user=root
+postgres   ansible_host=81.163.29.113    ansible_connection=ssh       ansible_user=root
 
 
 

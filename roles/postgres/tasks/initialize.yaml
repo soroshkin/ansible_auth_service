@@ -1,0 +1,19 @@
+- name: check if postgresql db is initialized
+  stat:
+    path: "{{ postgresql_data_dir }}/PG_VERSION"
+  register: pgdata_dir_version
+
+- name: initialize database
+  command: "{{ postgresql_bin_dir }}/{{ postgresql_setup_file }} initdb"
+  when: not pgdata_dir_version.stat.exists
+  no_log: "{{ postgres_no_log }}"
+  become: true
+  become_method: sudo
+  vars:
+    ansible_ssh_pipelining: true
+    
+- name: start postgres service
+  systemd: 
+    name: "{{ postgresql_service }}"
+    state: started
+    enabled: yes

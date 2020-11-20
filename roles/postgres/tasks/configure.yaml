@@ -1,0 +1,20 @@
+- name: allow postgres to accept connections from specific IPs
+  template: 
+    src: "{{ role_path }}/templates/{{ conf_file_name }}"
+    dest: "{{ postgresql_data_dir }}"
+    mode: 0600
+  become: yes
+  become_user: "{{ postgres_default_user }}"
+  notify: restart postgresql
+  
+- name: update postgres hba_file
+  template: 
+    src: "{{ role_path }}/templates/{{ hba_file_name }}"
+    dest: "{{ postgresql_data_dir }}"
+    mode: 0600
+  become: yes
+  become_user: "{{ postgres_default_user }}"
+  notify: restart postgresql
+ 
+- name: flush handlers
+  meta: flush_handlers

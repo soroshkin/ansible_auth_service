@@ -1,0 +1,16 @@
+- name: create new database
+  postgresql_db:
+    name: "{{ postgresql_db }}"
+    owner: "{{ postgresql_user }}"
+  become: yes
+  become_user: "{{ postgres_default_user }}"
+  no_log: "{{ postgres_no_log }}"
+  
+- name: change {{ postgresql_user }} privileges
+  postgresql_user:
+    name: "{{ postgresql_user }}"
+    db: "{{ postgresql_db }}"
+    priv: "ALL"
+  become: yes
+  become_user: "{{ postgres_default_user }}"
+  no_log: "{{ postgres_no_log }}"

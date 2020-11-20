@@ -1,4 +1,4 @@
-- hosts: authservice_api, authservice_loadbalancer
+- hosts: authservice_api, authservice_loadbalancer, postgres
   become:  
     true
   become_method: 

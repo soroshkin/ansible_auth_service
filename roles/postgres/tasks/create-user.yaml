@@ -1,0 +1,10 @@
+- name: create new postgres user
+  postgresql_user:
+    name: "{{ postgresql_user }}"
+    password: "{{ postgres_password }}"
+    encrypted: yes
+  environment:
+    PGOPTIONS: "-c password_encryption=scram-sha-256"
+  become: yes
+  become_user: "{{ postgres_default_user }}"
+  no_log: "{{ postgres_no_log }}"

@@ -10,3 +10,8 @@ hba_file_name: pg_hba.conf
 conf_file_name: postgresql.conf
 
 postgres_port: 5432/tcp
+
+postgres_no_log: True
+
+postgresql_listen_ip_addresses_group: authservice_api
+#postgresql_listen_ip_addresses: {{ hostvars['authservice_api'].ansible_host }}
